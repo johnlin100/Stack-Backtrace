@@ -54,6 +54,7 @@
   QemuFwCfgLib
   MemoryAllocationLib
   PcdLib
+  PeCoffUnwindInfoLib
 
 [Pcd]
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuSmbiosValidated

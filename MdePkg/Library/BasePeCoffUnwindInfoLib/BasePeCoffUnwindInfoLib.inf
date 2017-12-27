@@ -1,0 +1,33 @@
+## @file
+#  PE/COFF Entry Point Library implementation.
+#
+#  Free Distribution
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BasePeCoffUnwindInfoLib
+  #MODULE_UNI_FILE                = BasePeCoffGetEntryPointLib.uni
+  FILE_GUID                      = 25e0df05-6eb7-4f84-abe8-5baed8af4b6e
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PeCoffUnwindInfoLib
+
+
+#
+#  VALID_ARCHITECTURES           = X64
+#
+
+[Sources]
+  PeCoffUnwindInfo.c
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+
+[LibraryClasses]
+  DebugLib
+  PeCoffGetEntryPointLib
+

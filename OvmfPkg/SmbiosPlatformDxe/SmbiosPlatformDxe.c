@@ -15,6 +15,7 @@
 **/
 
 #include "SmbiosPlatformDxe.h"
+#include <Library/PeCoffUnwindInfoLib.h>
 
 #define TYPE0_STRINGS \
   "EFI Development Kit II / OVMF\0"     /* Vendor */ \
@@ -157,6 +158,8 @@ InstallAllStructures (
   return EFI_SUCCESS;
 }
 
+VOID
+StackTraceBackDemo (VOID);
 
 /**
   Installs SMBIOS information for OVMF
@@ -179,6 +182,21 @@ SmbiosTablePublishEntry (
   EFI_SMBIOS_PROTOCOL       *Smbios;
   SMBIOS_TABLE_ENTRY_POINT  *EntryPointStructure;
   UINT8                     *SmbiosTables;
+
+  {
+    UINTN StackAddr;
+    UINTN RetAddr;
+  
+    StackAddr = (UINTN) _AddressOfReturnAddress();
+    RetAddr = (UINTN) *((VOID **) StackAddr);
+  
+    DEBUG ((DEBUG_INFO, "===============\n"));
+    DEBUG ((DEBUG_INFO, "%a(): StackAddr: %x\n", __FUNCTION__, StackAddr));
+    DEBUG ((DEBUG_INFO, "%a(): RetAddr: %x\n", __FUNCTION__, RetAddr));
+    DEBUG ((DEBUG_INFO, "===============\n"));
+  }
+
+  StackTraceBackDemo ();
 
   //
   // Find the SMBIOS protocol
@@ -214,4 +232,31 @@ SmbiosTablePublishEntry (
   }
 
   return Status;
+}
+
+
+VOID
+StackTraceBackDemo (VOID)
+{
+  DEBUG ((DEBUG_INFO, "\n"));
+  DEBUG ((DEBUG_INFO, "StackTracebackDemo() Address      : 0x%x\n", (UINTN) StackTraceBackDemo));
+  DEBUG ((DEBUG_INFO, "SmbiosTablePublishEntry() Address : 0x%x\n", (UINTN) SmbiosTablePublishEntry));
+  
+  {
+    //
+    // Print Address Information in StackTraceBackDemo()
+    //
+    UINTN AddrofRetAddr;
+    UINTN RetAddr;
+    
+    AddrofRetAddr = (UINTN) _AddressOfReturnAddress();  
+    RetAddr = (UINTN) *((VOID **) AddrofRetAddr);
+    
+    DEBUG ((DEBUG_INFO, "%a(): AddrofRetAddr : 0x%x\n", __FUNCTION__, AddrofRetAddr));
+    DEBUG ((DEBUG_INFO, "%a(): RetAddr       : 0x%x\n", __FUNCTION__, RetAddr));
+    DEBUG ((DEBUG_INFO, "===============\n"));
+  }
+  
+  TraceBackCaller (8);   // Call TraceBack Function to trace the caller's address
+
 }
