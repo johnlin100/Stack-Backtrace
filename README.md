@@ -7,15 +7,15 @@ This is a demostration to show how to trace back the function calling path from 
 2. Run qemu-system-x86_64.exe with Ovmf.fd bios binary and dump the debug message as below example message.
 3. The sample trace back demo function is insert at OvmfPkg/SmbiosPlatformDxe/SmbiosPlatformDxe.c
 4. The Library for Unwind Information is located at MdePkg/Library/basePeCoffUnwindInfoLib.
-
 Example message:
 ============================================
-SmbiosTablePublishEntry(): Address Of Return Address = 0x7EFDD58
-SmbiosTablePublishEntry(): Return Address            = 0x7D913DE
-============================================
+SmbiosTablePublishEntry(): Address Of Return Address = 0x7EFDD58 
+SmbiosTablePublishEntry(): Return Address            = 0x7D913DE 
+
 ============================================
 StackTraceTestFunc(): Address Of Return Address = 0x7EFDD58
 StackTraceTestFunc(): Return Address            = 0x7D913DE
+
 ============================================
 0. Address Of Return Address = 0x7EFDD58
 0. Return Address            = 0x7D913DE
@@ -50,4 +50,5 @@ StackTraceTestFunc(): Return Address            = 0x7D913DE
 5. Address Of Return Address = 0x7EFDFB8
 5. Return Address            = 0x7F372D4
 ============================================
+
 !!!! Can't find Function entry
